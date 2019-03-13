@@ -14,14 +14,20 @@ public class PlayerMovementNetwork : MonoBehaviour {
 	}
 
 	public void FixedUpdate() {
-		transform.Rotate(0, 0, -h * 100f * Time.deltaTime);
+		//transform.Rotate(0, 0, -h * 100f * Time.deltaTime);
 
 		//Network.Move(v, h);
 
-		if (v > 0) {
+		if (v != 0) {
 			rb2d.AddForce(transform.up * 3f * v);
 		} else {
-			rb2d.velocity = Vector2.zero;
+			rb2d.velocity = new Vector2(rb2d.velocity.x, 0);
+		}
+
+		if (h != 0) {
+			rb2d.AddForce(transform.right * 3f * h);
+		} else {
+			rb2d.velocity = new Vector2(0, rb2d.velocity.y);
 		}
 	}
 }

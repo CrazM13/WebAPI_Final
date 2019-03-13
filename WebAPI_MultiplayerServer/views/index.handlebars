@@ -1,0 +1,19 @@
+<div class="card">
+	<div class="card-header">
+		<h1>BALOON POP</h1>
+	</div>
+	<div class="card-body">
+		<h3>View All Users</h3>
+		<a href="/user/list/all" class="btn btn-primary">VIEW ALL USERS</a>
+		<hr />
+		<h3>View High Scores</h3>
+		<form action="/gotohighscores" method="POST">
+			<label>Number of Scores to Display</label>
+			<br />		
+			<input type="number" name="quantity" min="1" max="20">
+			<br />
+			<br />
+			<button class="btn btn-primary" type="submit">VIEW HIGH SCORES</button>
+		</form>
+	</div>
+</div>

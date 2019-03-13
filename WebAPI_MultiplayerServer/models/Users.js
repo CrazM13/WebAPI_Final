@@ -7,6 +7,10 @@ var UserSchema = new Schema({
         type: String,
         required: true
     },
+    playerId: {
+        type:String,
+        required: true
+    },
     email: {
         type: String,
         required: false
@@ -18,6 +22,10 @@ var UserSchema = new Schema({
     date: {
         type: Date,
         default: Date.now
+    },
+    deaths: {
+        type: Number,
+        default: 0
     }
 
 });

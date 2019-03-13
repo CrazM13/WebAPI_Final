@@ -9,10 +9,11 @@ public class Network : MonoBehaviour {
 	static SocketIOComponent socket;
 
 	public Spawner spawner;
-	
+
+	public PopperNetwork popper;
 
 	void Start () {
-		socket = GetComponent<SocketIOComponent>();
+		socket = SocketScript.socket;
 
 		socket.On("open", OnConnected);
 		socket.On("talkback", OnTalkBack);
@@ -22,6 +23,16 @@ public class Network : MonoBehaviour {
 		socket.On("register", OnRegister);
 		socket.On("updatePosition", OnUpdatePosition);
 		socket.On("requestPosition", OnRequestPosition);
+		socket.On("updatePopper", OnUpdatePopper);
+		socket.On("respawn", OnRespawn);
+	}
+
+	private void OnRespawn(SocketIOEvent obj) {
+		spawner.FindPlayer(obj.data["id"].str).transform.position = Vector2.zero;
+	}
+
+	private void OnUpdatePopper(SocketIOEvent obj) {
+		popper.SetProperties(obj.data);
 	}
 
 	private void OnRequestPosition(SocketIOEvent obj) {
@@ -113,6 +124,14 @@ public class Network : MonoBehaviour {
 
 	public static Vector3 MakePositionFromJson(SocketIOEvent e) {
 		return new Vector3(e.data["x"].n, e.data["y"].n, e.data["z"].n);
+	}
+
+	public static void RequestPopperUpdate() {
+		socket.Emit("requestPopper");
+	}
+
+	public static void SendDeath() {
+		socket.Emit("sendDeath");
 	}
 
 }

@@ -20,7 +20,7 @@ public class NetworkInput : MonoBehaviour {
 
 	// Use this for initialization
 	void Start () {
-		socket = GetComponent<SocketIOComponent>();
+		socket = SocketScript.socket;
 
 		socket.On("connected", OnConnect);
 		socket.On("hideForm", OnHideForm);

@@ -11,14 +11,25 @@ public class PlayerMovement : MonoBehaviour {
 	}
 
 	void FixedUpdate() {
-		transform.Rotate(0, 0, -Input.GetAxisRaw("Horizontal") * 100f * Time.deltaTime);
+		//transform.Rotate(0, 0, -Input.GetAxisRaw("Horizontal") * 100f * Time.deltaTime);
 
 		Network.Move(Input.GetAxisRaw("Vertical"), Input.GetAxisRaw("Horizontal"));
 
-		if (Input.GetAxisRaw("Vertical") > 0) {
+		if (Input.GetAxisRaw("Vertical") != 0) {
 			rb2d.AddForce(transform.up * 3f * Input.GetAxisRaw("Vertical"));
 		} else {
-			rb2d.velocity = Vector2.zero;
+			rb2d.velocity = new Vector2(rb2d.velocity.x, 0);
 		}
+
+		if (Input.GetAxisRaw("Horizontal") != 0) {
+			rb2d.AddForce(transform.right * 3f * Input.GetAxisRaw("Horizontal"));
+		} else {
+			rb2d.velocity = new Vector2(0, rb2d.velocity.y);
+		}
+	}
+
+	private void OnTriggerEnter2D(Collider2D collision) {
+		transform.position = Vector2.zero;
+		Network.SendDeath();
 	}
 }
