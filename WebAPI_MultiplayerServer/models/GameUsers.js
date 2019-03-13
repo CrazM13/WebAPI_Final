@@ -1,10 +1,14 @@
 const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 
-var UserSchema = new Schema({
+var GameUserSchema = new Schema({
 
     name:{
         type: String,
+        required: true
+    },
+    playerId: {
+        type:String,
         required: true
     },
     email: {
@@ -18,8 +22,12 @@ var UserSchema = new Schema({
     date: {
         type: Date,
         default: Date.now
+    },
+    deaths: {
+        type: Number,
+        default: 0
     }
 
 });
 
-mongoose.model('Users', UserSchema);
+mongoose.model('GameUsers', GameUserSchema);

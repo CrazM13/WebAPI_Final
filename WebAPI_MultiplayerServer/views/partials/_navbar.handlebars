@@ -7,18 +7,15 @@
 
 	<div class="collapse navbar-collapse" id="navbarTogglerDemo03">
 		<ul class="navbar-nav mr-auto mt-2 mt-lg-0">
-
-			{{#if user}}
 			<li class="nav-item">
-				<a class="nav-link" href="/editusers">Edit Games</a>
+				<a class="nav-link" href="/">Homepage</a>
 			</li>
+			
+			{{#if user}}
 			<li class="nav-item">
 				<a class="nav-link" href="/logout">Log Out</a>
 			</li>
 			{{else}}
-			<li class="nav-item">
-				<a class="nav-link" href="/">Homepage</a>
-			</li>
 			<li class="nav-item">
 				<a class="nav-link" href="/login">Log In</a>
 			</li>

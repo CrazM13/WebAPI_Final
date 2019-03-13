@@ -1,0 +1,21 @@
+<div class="card">
+	<div class="card-header">
+		<h1>BALOON POP - ALL USERS</h1>
+	</div>
+	<div class="card-body">
+		{{#each results}}
+		<div class="card">
+			<div class="card-header">{{name}}</div>
+			<div class="card-body">
+				<ul>
+					<li>Deaths: {{deaths}}</li>
+					<li>ID: {{playerId}}</li>
+					<li>Date Joined: {{date}}</li>
+				</ul>
+			</div>
+            <a href="/user/edit/{{id}}" class="btn btn-warning">EDIT</a>
+		</div>
+		{{else}}
+		{{/each}}
+	</div>
+</div>

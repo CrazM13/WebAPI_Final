@@ -27,6 +27,9 @@ mongoose.connect(db.mongoURI, {
 require('./models/Users');
 var User = mongoose.model('Users');
 
+require('./models/GameUsers');
+var GameUser = mongoose.model('GameUsers');
+
 // Use Template Engine
 app.engine('handlebars', exphbs({
 	defaultLayout: 'main'
@@ -47,6 +50,8 @@ app.use(session({
 // Setup Passport
 app.use(passport.initialize());
 app.use(passport.session());
+
+require('./config/passport')(passport);
 
 // Confiure Flash
 app.use(flash());
@@ -118,10 +123,10 @@ io.on('connection', (socket) => {
 					name: data.name,
 					playerId: thisPlayerID
 				};
-				new User(newUser).save().then((users) => {
+				new GameUser(newUser).save().then((users) => {
 					console.log("Sending Data To Database");
 
-					User.find({}).then((users) => {
+					GameUser.find({}).then((users) => {
 						
 						socket.emit('hideForm', {users});
 					});
@@ -160,7 +165,7 @@ io.on('connection', (socket) => {
 	
 	socket.on('sendDeath', (data) => {
 		
-		User.findOne({ playerId: thisPlayerID }).then((user) => {
+		GameUser.findOne({ playerId: thisPlayerID }).then((user) => {
 			if (user != null) {
 				user.deaths = user.deaths + 1;
 				

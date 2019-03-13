@@ -1,0 +1,20 @@
+<div class="card">
+	<div class="card-header">
+		<h1>BALOON POP - EDIT USER</h1>
+	</div>
+	<div class="card-body">
+		<div class="card">
+            <form action="/user/edit/{{id}}" method="POST">
+                <div class="card-header"><input type="text" name="name" value="{{name}}" required /></div>
+                <div class="card-body">
+                    <ul>
+                        <li>Deaths: {{deaths}}</li>
+                        <li>ID: {{playerId}}</li>
+                        <li>Date Joined: {{date}}</li>
+                    </ul>
+                    <button type="submit">SUBMIT CHANGES</button>
+                </div>
+            </form>
+		</div>
+	</div>
+</div>
