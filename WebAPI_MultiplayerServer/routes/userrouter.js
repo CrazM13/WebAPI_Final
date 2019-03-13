@@ -20,7 +20,7 @@ router.get('/:id', (req, res) => {
 
 router.get('/list/top/:count', (req, res) => {
 	GameUser.find().limit(parseInt(req.params.count)).sort({ deaths: -1 }).then((results) => {
-		res.render('users/list', {results: results});
+		res.render('users/list', results);
 	});
 });
 
@@ -31,7 +31,7 @@ router.get('/list/all', (req, res) => {
 });
 
 router.get('/edit/:user', (req, res) => {
-	GameUser.find({_id: req.params.user}).then((user) => {
+	GameUser.findOne({_id: req.params.user}).then((user) => {
 		res.render('users/edit', user);
 	});
 });
@@ -43,11 +43,11 @@ router.get('/list/editable', ensureAuthenticated, (req, res) => {
 });
 
 router.post('/edit/:user', (req, res) => {
-	GameUser.find({_id: req.params.user}).then((user) => {
+	GameUser.findOne({_id: req.params.user}).then((user) => {
 		user.name = req.body.name;
 
 		user.save().then(() => {
-			res.redirect('/users/list/all');
+			res.redirect('/user/list/all');
 		});
 	});
 });

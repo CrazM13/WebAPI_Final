@@ -70,7 +70,7 @@ var popper = {
 	position: 0,
 	arrPos: 0,
 	shouldShoot: false,
-	shootChance: 25
+	shootChance: 50
 };
 
 var popperPositions = [0.1, 0.3, 0.7, 0.4, 0.1, 0.9, 0.2, 0.4, 0.1, 0.6, 0.5, 0.8, 0.1, 0.9];
