@@ -175,6 +175,13 @@ io.on('connection', (socket) => {
 		
 		socket.broadcast.emit('respawn', {id: thisPlayerID});
 	});
+
+	socket.on('requestHighScores', () => {
+		GameUser.find().limit(10).sort({ deaths: -1 }).then((results) => {
+			socket.emit('recieveHighScores', {users: results});
+		});
+	});
+
 });
 
 app.use(express.static(__dirname + "/views"));
