@@ -6,12 +6,16 @@ public class PlayerMovement : MonoBehaviour {
 
 	Rigidbody2D rb2d;
 
+	float time;
+
 	void Start() {
 		rb2d = GetComponent<Rigidbody2D>();
 	}
 
 	void FixedUpdate() {
 		//transform.Rotate(0, 0, -Input.GetAxisRaw("Horizontal") * 100f * Time.deltaTime);
+
+		time += Time.deltaTime;
 
 		Network.Move(Input.GetAxisRaw("Vertical"), Input.GetAxisRaw("Horizontal"));
 
@@ -30,6 +34,7 @@ public class PlayerMovement : MonoBehaviour {
 
 	private void OnTriggerEnter2D(Collider2D collision) {
 		transform.position = Vector2.zero;
-		Network.SendDeath();
+		Network.SendDeath(time);
+		time = 0;
 	}
 }

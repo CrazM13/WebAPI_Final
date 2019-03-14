@@ -10,7 +10,7 @@ public class HighScorePlate : MonoBehaviour {
 	// Use this for initialization
 	void Start () {
 		targetY = transform.position.y;
-		transform.position = new Vector2(transform.position.x, 500);
+		transform.position = new Vector2(transform.position.x, transform.position.y + 750);
 
 		randomTime = Random.Range(0.1f, 2f);
 

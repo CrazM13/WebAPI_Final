@@ -61,6 +61,8 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Assets\Scripts\CloudScript.cs" />
+    <Compile Include="Assets\Scripts\DartPool.cs" />
     <Compile Include="Assets\Scripts\HighScorePlate.cs" />
     <Compile Include="Assets\Scripts\Network.cs" />
     <Compile Include="Assets\Scripts\NetworkEntity.cs" />
@@ -74,6 +76,7 @@
     <Compile Include="Assets\Scripts\SceneChanger.cs" />
     <Compile Include="Assets\Scripts\SocketScript.cs" />
     <Compile Include="Assets\Scripts\Spawner.cs" />
+    <Compile Include="Assets\Scripts\StartGameScript.cs" />
     <Compile Include="Assets\SocketIO\JSONObject\JSONObject.cs" />
     <Compile Include="Assets\SocketIO\JSONObject\JSONTemplates.cs" />
     <Compile Include="Assets\SocketIO\JSONObject\VectorTemplates.cs" />

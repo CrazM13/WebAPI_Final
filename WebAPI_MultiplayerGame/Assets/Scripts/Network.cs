@@ -130,8 +130,12 @@ public class Network : MonoBehaviour {
 		socket.Emit("requestPopper");
 	}
 
-	public static void SendDeath() {
-		socket.Emit("sendDeath");
+	public static void SendDeath(float lifetime) {
+
+		JSONObject deathInfo = new JSONObject(JSONObject.Type.OBJECT);
+		deathInfo.AddField("lifetime", lifetime);
+
+		socket.Emit("sendDeath", deathInfo);
 	}
 
 }

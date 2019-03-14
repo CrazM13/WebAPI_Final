@@ -82,29 +82,7 @@ io.on('connection', (socket) => {
 
 	socket.emit('connected');
 
-	var thisPlayerID = shortid.generate();
-
-	var player = {
-		id: thisPlayerID
-	};
-
-	players[thisPlayerID] = player;
-
-	socket.emit('register', {id: thisPlayerID});
-	socket.broadcast.emit('spawn', {id: thisPlayerID});
-	socket.broadcast.emit('requestPosition');
-	
-	
-	for (var playerId in players) {
-		console.log(playerId);
-		
-		if (playerId == thisPlayerID) continue;
-
-		console.log(playerId);
-
-		console.log("Sending Spawn To New Player With ID", playerId);
-		socket.emit('spawn', players[playerId]);
-	}
+	var thisPlayerID;
 
 	socket.on('sayhello', (data) => {
 		console.log("Unity Game Says \"Hello\"");
@@ -114,11 +92,19 @@ io.on('connection', (socket) => {
 
 	socket.on('sendData', (data) => {
 		console.log(JSON.stringify(data));
-		User.findOne({ name: data.name }).then((user) => {
+		console.log(data.name);
+		GameUser.findOne({ name: data.name }).then((user) => {
 			console.log(JSON.stringify(user));
 			if (user != null) {
-				socket.emit('registrationFailed', data);
+				thisPlayerID = user.playerId;
+				GameUser.find({}).then((users) => {
+					socket.emit('hideForm', {users});
+				});
+				//socket.emit('registrationFailed', data);
 			} else {
+
+				thisPlayerID = shortid.generate();
+
 				var newUser = {
 					name: data.name,
 					playerId: thisPlayerID
@@ -127,7 +113,6 @@ io.on('connection', (socket) => {
 					console.log("Sending Data To Database");
 
 					GameUser.find({}).then((users) => {
-						
 						socket.emit('hideForm', {users});
 					});
 				});
@@ -166,8 +151,11 @@ io.on('connection', (socket) => {
 	socket.on('sendDeath', (data) => {
 		
 		GameUser.findOne({ playerId: thisPlayerID }).then((user) => {
+		
 			if (user != null) {
 				user.deaths = user.deaths + 1;
+
+				user.besttime = Math.max(user.besttime, data.lifetime);
 				
 				user.save();
 			} else console.log("USER " + thisPlayerID + " DOES NOT EXIST!!!");
@@ -177,9 +165,33 @@ io.on('connection', (socket) => {
 	});
 
 	socket.on('requestHighScores', () => {
-		GameUser.find().limit(10).sort({ deaths: -1 }).then((results) => {
+		GameUser.find().limit(10).sort({ besttime: -1 }).then((results) => {
 			socket.emit('recieveHighScores', {users: results});
 		});
+	});
+
+	socket.on('gameStart', () => {
+		var player = {
+			id: thisPlayerID
+		};
+
+		players[thisPlayerID] = player;
+
+		socket.emit('register', {id: thisPlayerID});
+		socket.broadcast.emit('spawn', {id: thisPlayerID});
+		socket.broadcast.emit('requestPosition');
+		
+		
+		for (var playerId in players) {
+			console.log(playerId);
+			
+			if (playerId == thisPlayerID) continue;
+
+			console.log(playerId);
+
+			console.log("Sending Spawn To New Player With ID", playerId);
+			socket.emit('spawn', players[playerId]);
+		}
 	});
 
 });

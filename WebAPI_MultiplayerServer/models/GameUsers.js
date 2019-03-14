@@ -26,6 +26,10 @@ var GameUserSchema = new Schema({
     deaths: {
         type: Number,
         default: 0
+    },
+    besttime: {
+        type: Number,
+        default: 0
     }
 
 });

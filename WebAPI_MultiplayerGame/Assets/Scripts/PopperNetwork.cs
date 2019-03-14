@@ -10,7 +10,7 @@ public class PopperNetwork : MonoBehaviour {
 	private float targetPosition = 0;
 	private bool shouldShoot = false;
 
-	public GameObject popperDartPrefab;
+	public DartPool dartPool;
 
 	// Use this for initialization
 	void Start () {
@@ -38,8 +38,7 @@ public class PopperNetwork : MonoBehaviour {
 	}
 
 	private void Shoot() {
-		GameObject popperDart = Instantiate(popperDartPrefab);
-		popperDart.transform.position = transform.position;
+		dartPool.ShootDart(transform.position);
 
 		shouldShoot = false;
 	}

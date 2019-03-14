@@ -26,7 +26,15 @@ public class NetworkHighScores : MonoBehaviour {
 
 		for (int i = 0; i < 10; i++) {
 			JSONObject ply = obj.data["users"][i];
-			if (ply != null) highScoreText[i].text = ply["name"].str + " - " + ply["deaths"].n + '\n';
+
+			float time = ply["besttime"].n;
+			string outTime = "";
+
+			int minutes = (int)time / 60;
+			int seconds = (int)time % 60;
+			outTime = string.Format("{0:00}:{1:00}", minutes, seconds);
+
+			if (ply != null) highScoreText[i].text = ply["name"].str + " - " + outTime + '\n';
 		}
 	}
 }

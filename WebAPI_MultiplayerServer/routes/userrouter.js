@@ -19,7 +19,7 @@ router.get('/:id', (req, res) => {
 });
 
 router.get('/list/top/:count', (req, res) => {
-	GameUser.find().limit(parseInt(req.params.count)).sort({ deaths: -1 }).then((results) => {
+	GameUser.find().limit(parseInt(req.params.count)).sort({ besttime: -1 }).then((results) => {
 		res.render('users/list', { results: results });
 	});
 });
